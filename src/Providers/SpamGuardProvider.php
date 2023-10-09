@@ -34,7 +34,7 @@ class SpamGuardProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../database/migrations/create_blacklist_table.php' => database_path('migrations/' . now()->format('Y_m_d_His') . '_create_blacklist_table.php'),
-            __DIR__.'/../database/seeders/BlackListTableSeeder.php' => database_path('seeders/' . now()->format('Y_m_d_His') . '_BlackListTableSeeder.php'),
+            __DIR__.'/../database/seeders/BlackListTableSeeder.php' => database_path('seeders/BlackListTableSeeder.php'),
         ], 'spamguard-blacklist');
 
 
