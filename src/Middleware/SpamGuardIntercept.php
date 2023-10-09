@@ -24,12 +24,6 @@ class SpamGuardIntercept
      */
     public function handle($request, Closure $next)
     {
-        // everything except the csrf token
-        $this->payload = Arr::except(request()->input(), ['_token']);
-
-        // use the truncated part of the configured field to form the 'quick view' cover for the message
-        $this->cover = array_key_exists(config('spamguard.cover_field'), request()->input()) ? Str::limit(request()->input()[config('spamguard.cover_field')] ?? '', 40) : '';
-
         if($request->method() === 'POST')
         {
             if($then = session()->get('page_loaded_at'))
@@ -45,6 +39,9 @@ class SpamGuardIntercept
             }else {
                 $this->addReason('Page load session was not set properly');
             }
+
+            // everything except the csrf token
+            $this->payload = Arr::except(request()->input(), ['_token']);
 
             // is the honeytrap field filled in (if it's even part of the request payload then yes it is)
             if(config('spamguard.honeytrap_field') && array_key_exists(config('spamguard.honeytrap_field'), $this->payload) && $this->payload[config('spamguard.honeytrap_field')])
@@ -107,6 +104,9 @@ class SpamGuardIntercept
             (config('spamguard.save_spam_submissions') && $banned) ||
             (config('spamguard.save_legit_submissions') && !$banned)
         ) {
+
+            // use the truncated part of the configured field to form the 'quick view' cover for the message
+            $this->cover = array_key_exists(config('spamguard.cover_field'), request()->input()) ? Str::limit(request()->input()[config('spamguard.cover_field')] ?? '', 40) : '';
 
             FormSubmission::create([
                 'ip_address' => request()->ip(),
