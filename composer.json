@@ -1,0 +1,24 @@
+{
+    "name": "inigopascall/spamguard",
+    "description": "Prevent spam form submissions",
+    "type": "laravel-package",
+    "autoload": {
+        "psr-4": {
+            "InigoPascall\\SpamGuard\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Inigo Pascall",
+            "email": "inigo@inigowebdesign.co.uk"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "InigoPascall\\SpamGuard\\Providers\\SpamGuardProvider"
+            ]
+        }
+    },
+    "require": {}
+}
